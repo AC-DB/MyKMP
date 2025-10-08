@@ -9,8 +9,6 @@
   同样，如果您想编辑桌面 (JVM) 特定的部分，那么 [jvmMain](./composeApp/src/jvmMain/kotlin)
   文件夹也是合适的位置。
 
-* [/server](./server/src/main/kotlin) 用于 Ktor 服务器应用程序。
-
 * [/shared](./shared/src) 用于存放项目中所有目标之间共享的代码。
   最重要的子文件夹是 [commonMain](./shared/src/commonMain/kotlin)。如果您愿意，
   也可以在此处将代码添加到平台特定的文件夹中。
@@ -39,19 +37,6 @@
 - 在 Windows 上
 ```shell
 .\gradlew.bat :composeApp:run
-```
-
-### 构建并运行服务器
-
-要构建并运行服务器的开发版本，请使用 IDE 工具栏中运行小部件中的运行配置
-或直接从终端运行：
-- 在 macOS/Linux 上
-```shell
-./gradlew :server:run
-```
-- 在 Windows 上
-```shell
-.\gradlew.bat :server:run
 ```
 
 ### 构建并运行 Web 应用
@@ -147,18 +132,6 @@
 
 # 构建生产版WASM包
 ./gradlew wasmJsBrowserProductionWebpack
-```
-
-### **Ktor服务器**
-```bash
-# 运行Ktor服务器
-./gradlew runFatJar
-
-# 使用Docker运行
-./gradlew runDocker
-
-# 构建Fat JAR
-./gradlew buildFatJar
 ```
 
 ## 🔧 构建和打包命令
