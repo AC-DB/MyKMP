@@ -1,4 +1,4 @@
-这是一个面向 Android、Web、桌面 (JVM) 和服务器的 Kotlin 多平台项目。
+这是一个面向 Android、Web 和桌面 (JVM) 的 Kotlin 多平台项目。
 
 * [/composeApp](./composeApp/src) 用于存放将在您的 Compose 多平台应用程序中共享的代码。
   它包含几个子文件夹：
@@ -8,10 +8,6 @@
   那么 [iosMain](./composeApp/src/iosMain/kotlin) 文件夹就是进行此类调用的正确位置。
   同样，如果您想编辑桌面 (JVM) 特定的部分，那么 [jvmMain](./composeApp/src/jvmMain/kotlin)
   文件夹也是合适的位置。
-
-* [/shared](./shared/src) 用于存放项目中所有目标之间共享的代码。
-  最重要的子文件夹是 [commonMain](./shared/src/commonMain/kotlin)。如果您愿意，
-  也可以在此处将代码添加到平台特定的文件夹中。
 
 ### 构建并运行 Android 应用
 
@@ -41,8 +37,8 @@
 
 ### 构建并运行 Web 应用
 
-要构建并运行 Web 应用的开发版本，请使用 IDE 工具栏中运行小部件中的运行配置
-或直接从终端运行：
+要构建并运行 Web 应用的开发版本，请使用 IDE 的运行小部件中的运行配置
+工具栏或直接从终端运行：
 - 对于 Wasm 目标（速度更快，支持现代浏览器）：
 - 在 macOS/Linux 上
 ```shell
@@ -64,242 +60,171 @@
 
 ---
 
-了解更多关于 [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)、
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform)、
+了解更多关于 [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html) 的信息，
+[Compose多平台](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform)、
 [Kotlin/Wasm](https://kotl.in/wasm/)…
 
-我们期待您在公共 Slack 频道 [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web) 中就 Compose/Web 和 Kotlin/Wasm 提供反馈。
+我们非常感谢您通过公共 Slack 频道 [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web) 就 Compose/Web 和 Kotlin/Wasm 提供反馈。
 如果您遇到任何问题，请在 [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP) 上报告。
 
-常用配置
-基于您的Kotlin Multiplatform项目的Gradle tasks输出，我来为您生成各个平台的开发、调试和打包命令。这个项目支持Android、Web(JS/WASM)、桌面(JVM)和Ktor服务器。
 
-## 🚀 开发和运行命令
+## 1. Android 应用
 
-### **桌面平台 (JVM)**
-```bash
-# 开发运行 (支持热重载)
-./gradlew hotDevJvm
+### 构建 Debug 版 APK
+- **macOS/Linux:**
+  ```sh
+  ./gradlew :composeApp:assembleDebug
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat :composeApp:assembleDebug
+  ```
 
-# 普通运行
-./gradlew run
-./gradlew jvmRun
+### 构建 Release 版 APK
+- **macOS/Linux:**
+  ```sh
+  ./gradlew :composeApp:assembleRelease
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat :composeApp:assembleRelease
+  ```
 
-# 运行Fat JAR
-./gradlew runFatJar
+### 安装到设备（仅 Android）
+- **macOS/Linux:**
+  ```sh
+  ./gradlew :composeApp:installDebug
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat :composeApp:installDebug
+  ```
 
-# 运行Shadow JAR
-./gradlew runShadow
-```
+---
 
-### **Android平台**
-```bash
-# 安装Debug版本到设备
-./gradlew installDebug
+## 2. 桌面 (JVM) 应用
 
-# 运行Android测试
-./gradlew connectedDebugAndroidTest
+### 运行开发版
+- **macOS/Linux:**
+  ```sh
+  ./gradlew :composeApp:run
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat :composeApp:run
+  ```
 
-# 卸载应用
-./gradlew uninstallDebug
-```
+### 构建可分发包（release 可执行文件/安装包）
+- **macOS/Linux:**
+  ```sh
+  ./gradlew :composeApp:createReleaseDistributable
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat :composeApp:createReleaseDistributable
+  ```
 
-### **Web平台 (JavaScript)**
-```bash
-# 开发模式运行 (带热重载)
-./gradlew jsBrowserDevelopmentRun
+#### 其他桌面平台打包命令（可选）：
+- **macOS 打包 DMG:**
+  ```sh
+  ./gradlew :composeApp:packageReleaseDmg
+  ```
+- **Windows 打包 MSI:**
+  ```bat
+  .\gradlew.bat :composeApp:packageReleaseMsi
+  ```
+- **Linux 打包 DEB:**
+  ```sh
+  ./gradlew :composeApp:packageReleaseDeb
+  ```
 
-# 生产模式运行
-./gradlew jsBrowserProductionRun
+---
 
-# 构建开发版Web包
-./gradlew jsBrowserDevelopmentWebpack
+## 3. Web 应用
 
-# 构建生产版Web包
-./gradlew jsBrowserProductionWebpack
-```
+### 运行开发版 (Wasm，现代浏览器推荐)
+- **macOS/Linux:**
+  ```sh
+  ./gradlew :composeApp:wasmJsBrowserDevelopmentRun
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
+  ```
 
-### **Web平台 (WebAssembly)**
-```bash
-# 开发模式运行
-./gradlew wasmJsBrowserDevelopmentRun
+### 运行开发版 (JS，兼容老浏览器)
+- **macOS/Linux:**
+  ```sh
+  ./gradlew :composeApp:jsBrowserDevelopmentRun
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat :composeApp:jsBrowserDevelopmentRun
+  ```
 
-# 生产模式运行
-./gradlew wasmJsBrowserProductionRun
+### 构建生产版（产出可部署到服务器的包）
+- **Wasm:**
+  - macOS/Linux:
+    ```sh
+    ./gradlew :composeApp:wasmJsBrowserProductionWebpack
+    ```
+  - Windows:
+    ```bat
+    .\gradlew.bat :composeApp:wasmJsBrowserProductionWebpack
+    ```
+- **JS:**
+  - macOS/Linux:
+    ```sh
+    ./gradlew :composeApp:jsBrowserProductionWebpack
+    ```
+  - Windows:
+    ```bat
+    .\gradlew.bat :composeApp:jsBrowserProductionWebpack
+    ```
 
-# 构建开发版WASM包
-./gradlew wasmJsBrowserDevelopmentWebpack
+---
 
-# 构建生产版WASM包
-./gradlew wasmJsBrowserProductionWebpack
-```
+## 4. 运行/测试所有平台通用命令
 
-## 🔧 构建和打包命令
+### 构建全部
+- **macOS/Linux:**
+  ```sh
+  ./gradlew build
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat build
+  ```
 
-### **通用构建**
-```bash
-# 清理项目
-./gradlew clean
+### 运行所有测试
+- **macOS/Linux:**
+  ```sh
+  ./gradlew allTests
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat allTests
+  ```
 
-# 构建所有平台
-./gradlew build
+### 清理项目
+- **macOS/Linux:**
+  ```sh
+  ./gradlew clean
+  ```
+- **Windows:**
+  ```bat
+  .\gradlew.bat clean
+  ```
 
-# 仅编译不测试
-./gradlew assemble
-```
+---
 
-### **Android打包**
-```bash
-# 构建Debug APK
-./gradlew assembleDebug
+## 5. 其他常用命令
 
-# 构建Release APK
-./gradlew assembleRelease
-
-# 生成签名报告
-./gradlew signingReport
-
-# 构建Bundle (AAB)
-./gradlew bundle
-```
-
-### **桌面打包**
-
-#### **Windows (当前系统)**
-```bash
-# 打包当前操作系统的分发包
-./gradlew packageDistributionForCurrentOS
-
-# 创建MSI安装包
-./gradlew packageMsi
-
-# 创建可分发应用
-./gradlew createDistributable
-
-# 创建Uber JAR
-./gradlew packageUberJarForCurrentOS
-```
-
-#### **跨平台打包**
-```bash
-# 创建通用分发包
-./gradlew createDistributable
-
-# 打包DEB (Linux)
-./gradlew packageDeb
-
-# 打包DMG (macOS)
-./gradlew packageDmg
-
-# 创建Release版本
-./gradlew createReleaseDistributable
-./gradlew packageReleaseDistributionForCurrentOS
-```
-
-### **Web打包**
-```bash
-# JS分发包
-./gradlew jsBrowserDistribution
-
-# WASM分发包
-./gradlew wasmJsBrowserDistribution
-
-# 兼容性分发包 (JS + WASM)
-./gradlew composeCompatibilityBrowserDistribution
-```
-
-### **Docker容器**
-```bash
-# 构建Docker镜像到tar
-./gradlew buildImage
-
-# 构建并发布到本地Docker
-./gradlew jibDockerBuild
-
-# 发布到远程仓库
-./gradlew publishImage
-
-# 发布到本地仓库
-./gradlew publishImageToLocalRegistry
-```
-
-## 🧪 测试命令
-
-### **运行所有测试**
-```bash
-# 运行所有平台测试
-./gradlew allTests
-
-# 运行检查
-./gradlew check
-```
-
-### **平台特定测试**
-```bash
-# JVM测试
-./gradlew jvmTest
-
-# Android单元测试
-./gradlew testDebugUnitTest
-./gradlew testReleaseUnitTest
-
-# Android设备测试
-./gradlew connectedAndroidTest
-
-# JavaScript测试
-./gradlew jsTest
-./gradlew jsBrowserTest
-
-# WebAssembly测试
-./gradlew wasmJsTest
-./gradlew wasmJsBrowserTest
-```
-
-## 📦 分发命令
-
-```bash
-# 创建Tar包
-./gradlew distTar
-
-# 创建Zip包
-./gradlew distZip
-
-# 安装到本地
-./gradlew installDist
-
-# Shadow分发
-./gradlew shadowDistZip
-./gradlew shadowDistTar
-```
-
-## 🔥 热重载开发
-
-```bash
-# JVM热重载开发
-./gradlew hotDevJvm
-
-# 异步热重载
-./gradlew hotDevJvmAsync
-
-# 重新加载所有应用
-./gradlew reload
-```
-
-## 🛠️ 实用工具命令
-
-```bash
-# 查看依赖
-./gradlew dependencies
-
-# 查看项目属性
-./gradlew properties
-
-# 生成Wrapper
-./gradlew wrapper
-
-# 查看Java工具链
-./gradlew javaToolchains
-
-# 检查Kotlin配置
-./gradlew checkKotlinGradlePluginConfigurationErrors
-```
+- **查看全部任务：**
+  ```sh
+  ./gradlew tasks --all
+  ```
+  或
+  ```bat
+  .\gradlew.bat tasks --all
+  ```
